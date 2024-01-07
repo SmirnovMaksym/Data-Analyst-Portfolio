@@ -1,0 +1,117 @@
+-- Creating a database
+CREATE DATABASE IF NOT EXISTS Hotel;
+USE Hotel;
+
+-- Creating the comfort_types table
+CREATE TABLE IF NOT EXISTS comfort_types (
+comfort_id INT AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(50) NOT NULL
+);
+
+-- Adding comfort types
+INSERT INTO comfort_types (name) VALUES
+('regular'),
+('comfort'),
+('luxury');
+
+-- Creating the rooms table
+CREATE TABLE IF NOT EXISTS rooms (
+room_id INT AUTO_INCREMENT PRIMARY KEY,
+capacity INT NOT NULL,
+comfort_id INT,
+price INT,
+FOREIGN KEY (comfort_id) REFERENCES comfort_types(comfort_id),
+current_client INT
+);
+
+-- Populating the rooms table
+INSERT INTO rooms (capacity, comfort_id, price)
+SELECT
+FLOOR(1 + RAND() * 4) AS capacity,
+comfort_id,
+FLOOR(RAND() * 21 + 20) * 100 AS price
+FROM comfort_types
+CROSS JOIN (SELECT 1 UNION SELECT 2 UNION SELECT 3) AS numbers
+CROSS JOIN (SELECT 1 AS num UNION SELECT 2 UNION SELECT 3 UNION SELECT 4) AS capacities;
+
+-- Creating the clients table
+CREATE TABLE IF NOT EXISTS clients (
+client_id INT AUTO_INCREMENT PRIMARY KEY,
+first_name VARCHAR(50) NOT NULL,
+last_name VARCHAR(50) NOT NULL,
+passport VARCHAR(20) NOT NULL,
+address VARCHAR(50),
+comment VARCHAR(255)
+);
+
+-- Populating the clients table
+INSERT INTO clients (first_name, last_name, passport, address, comment) VALUES
+('Ivan', 'Dolgan', 'AB123456', 'Kyiv', NULL),
+('Veronika', 'Soroka', 'CD789012', 'Lviv', NULL),
+('John', 'Smith', 'EF345678', 'Mykolaiv', 'problems with paying'),
+('Will', 'Smith', 'GH901234', 'Kharkiv', NULL),
+('Valeriy', 'Petrov', 'IJ567890', 'Odesa', 'owner''s friend'),
+('Taras', 'Shevchenko', 'KL123456', 'Dnipro', NULL),
+('Vladislaw', 'Kovach', 'MN789012', 'Lviv', 'a lot of garbage'),
+('Evgeniy', 'Vrag', 'OP345678', 'Odesa', NULL),
+('Polina', 'Kostushka', 'QR901234', 'Dnipro', NULL),
+('Platon', 'Bogov', 'ST567890', 'Lviv', NULL),
+('Ivan', 'Petrenko', 'AB123456', 'Kharkiv', NULL),
+('Maria', 'Koval', 'CD789012', 'Kharkiv', 'aggressive'),
+('Oleg', 'Korchnoy', 'EF345678', 'Dnipro', NULL),
+('Natalia', 'Sidorenko', 'GH901234', 'Kharkiv', NULL),
+('Andrew', 'Kuzmeko', 'IJ567890', 'Odesa', 'rude'),
+('Oksana', 'Lisenko', 'KL123456', 'Kyiv', NULL),
+('Igor', 'Melnik', 'MN789012', 'Mykolaiv', NULL),
+('Anna', 'Kravchenko', 'OP345678', 'Odesa', NULL),
+('Valentin', 'Bilous', 'QR901234', 'Kharkiv', NULL),
+('Ludmila', 'Savchenko', 'ST567890', 'Dnipro', NULL);
+
+-- Creating the regular_clients table
+CREATE TABLE IF NOT EXISTS regular_clients (
+client_id INT,
+discount INT,
+FOREIGN KEY (client_id) REFERENCES clients(client_id)
+);
+
+-- Populating the regular_clients table
+INSERT INTO regular_clients (client_id, discount)
+SELECT
+client_id,
+FLOOR(1 + RAND() * 10) AS discount
+FROM clients;
+
+-- Creating the attendance_log table
+CREATE TABLE IF NOT EXISTS attendance_log (
+log_id INT AUTO_INCREMENT PRIMARY KEY,
+room_id INT,
+date_of_entry DATE,
+date_of_exit DATE,
+FOREIGN KEY (room_id) REFERENCES rooms(room_id)
+);
+
+-- Populating the attendance_log table
+INSERT INTO attendance_log (room_id, date_of_entry, date_of_exit)
+SELECT
+room_id,
+CURRENT_DATE - INTERVAL FLOOR(1 + RAND() * 30) DAY AS date_of_entry,
+CURRENT_DATE + INTERVAL FLOOR(RAND() * 30) DAY AS date_of_exit
+FROM rooms;
+
+-- Creating the staff table
+CREATE TABLE IF NOT EXISTS staff (
+worker_id INT AUTO_INCREMENT PRIMARY KEY,
+first_name VARCHAR(50) NOT NULL,
+last_name VARCHAR(50) NOT NULL,
+position VARCHAR(50) NOT NULL
+);
+
+-- Populating the staff table
+INSERT INTO staff (first_name, last_name, position) VALUES
+('Ivan', 'Kovalenko', 'Manager'),
+('Olena', 'Shevchenko', 'Waiter'),
+('Maxim', 'Bilenky', 'Porter'),
+('Nataliya', 'Savchuk', 'Administrator'),
+('Yevhen', 'Melnik', 'Hotel Worker'),
+('Anna', 'Ivanova', 'Receptionist'),
+('Petro', 'Petrenko', 'Security Guard');
