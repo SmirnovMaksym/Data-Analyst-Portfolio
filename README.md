@@ -4,11 +4,14 @@
 			- Number of Strikes EDA
 			- Roller Coaster EDA
 			- World Population EDA
+   			- Ultra Marathon EDA
    
 		Statistics:
 			- Sales Prediction with Simple Linear Regression
 			- Hypothesis Testing
 			- Sampling + Confidence Interval
+   			- Multiple Linear Regression
+      			- Sales Prediction with Multiple Linear Regression
    
 		Web Scraping:
 			- Academy Awards Web Scraping
