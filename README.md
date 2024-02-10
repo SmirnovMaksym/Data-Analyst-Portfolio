@@ -11,7 +11,7 @@
 			- Hypothesis Testing
 			- Sampling + Confidence Interval
    			- Multiple Linear Regression
-      			- Sales Prediction with Multiple Linear Regression
+      		- Sales Prediction with Multiple Linear Regression
    
 		Web Scraping:
 			- Academy Awards Web Scraping
