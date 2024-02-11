@@ -18,6 +18,7 @@
    
 		Data Cleaning:
 			- Customer Call List Data Cleaning 
+   			- Cricket Test Matches Data Cleaning
 
 	SQL:
 		Hotel Management Scripts: 
