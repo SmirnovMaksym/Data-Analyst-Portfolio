@@ -19,6 +19,9 @@
 		Data Cleaning:
 			- Customer Call List Data Cleaning 
    			- Cricket Test Matches Data Cleaning
+      		
+		AB Tests: 
+			- Analysis of the results of the AB-test 
 
 	SQL:
 		Hotel Management Scripts: 
